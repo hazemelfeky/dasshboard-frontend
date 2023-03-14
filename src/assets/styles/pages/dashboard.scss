@@ -1,0 +1,86 @@
+@import "../variables";
+
+.dashboard {
+  
+.menu--bar {
+  background-color: $txt-main;
+  padding-left: 50px;
+  ul {
+    padding: 0;
+    list-style: none;
+    display: flex;
+    gap: 3rem;
+
+    li {
+
+      .menu--bar--btn {
+        background-color: unset;
+        box-shadow: none;
+        .v-btn__content {
+          color: white;;
+        }
+      }
+    }
+  }
+}
+
+.v-card {
+  background-color: white;
+}
+
+.v-tabs {
+  background-color: white;
+  margin-bottom: 0.5rem;
+  border-bottom: 1px solid #eee;
+  padding-left: 50px;
+}
+
+.overview {
+  
+  .v-table {
+    padding-left: 50px;
+    background-color: white;
+    height: 87vh;
+    overflow-x: hidden;
+
+    tr {
+
+      th {
+        font-size: 16px;
+        font-weight: 500;
+        color: #000;
+      }
+    }
+    
+    td {
+      border-bottom: unset !important;
+      font-size: 12px;
+
+      &:not(:first-child) {
+        border-left: 1px solid #73B9FF;
+      }
+    }
+
+  }
+  /* Define the styles for the scrollbar */
+  ::-webkit-scrollbar {
+    width: 8px; /* width of the scrollbar */
+  }
+
+  /* Define the track styles (the background of the scrollbar) */
+  ::-webkit-scrollbar-track {
+    background-color: #f1f1f1; /* color of the scrollbar track */
+  }
+
+  /* Define the thumb styles (the draggable part of the scrollbar) */
+  ::-webkit-scrollbar-thumb {
+    background-color: #888; /* color of the scrollbar thumb */
+    border-radius: 4px; /* rounded corners of the scrollbar thumb */
+  }
+
+  /* Define the hover styles for the thumb */
+  ::-webkit-scrollbar-thumb:hover {
+    background-color: #555; /* color of the scrollbar thumb when hovered */
+  }
+}
+}

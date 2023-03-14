@@ -1,0 +1,37 @@
+@import "../variables";
+
+.v-navigation-drawer__content {
+  padding-left: 1.5rem;
+}
+
+.padding--nav {
+  padding-left: 256px;
+}
+
+.v-list-item--variant-text .v-list-item__overlay {
+  border-radius: 15px 0 0 15px;
+}
+
+.v-list-item__content {
+  z-index: 2;
+}
+
+.v-list-item {
+
+
+  .v-list-item-title {
+  font-size: 20px;
+  color: white;
+  }
+}
+
+.v-list-item--active {
+
+  .v-list-item__overlay {
+    background: white !important;
+    opacity: 1 !important;
+  }
+  .v-list-item-title {
+    color: $txt-main !important;
+  }
+}

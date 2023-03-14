@@ -2,6 +2,8 @@
 
 @import "pages/splash.scss";
 @import "pages/login.scss";
+@import "pages/dashboard.scss";
+@import "pages/home.scss";
 @import "variables";
 
 * {
@@ -18,4 +20,18 @@ a {
 
 .my-2 {
   margin: 4rem 0;
+}
+
+.d-flex {
+  display: flex;
+}
+
+.flex-column {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.h-full {
+  height: 100vh;
 }

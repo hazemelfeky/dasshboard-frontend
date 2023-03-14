@@ -4,6 +4,14 @@
   </v-app>
 </template>
 
-<style lang="scss">
+<script setup>
+// import Vue, { onMounted } from "vue";
 
-</style>
+// onMounted( () => {
+//   // add $ref to the Vue.js instance prototype
+//   Vue.prototype.$ref = function (initialValue) {
+//     return ref(initialValue);
+//   };
+// })
+</script>
+
