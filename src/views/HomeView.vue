@@ -1,7 +1,7 @@
 <script setup>
-import { ref } from "vue"
+import { ref, computed, onMounted } from "vue"
 
-const drawer = ref(true)
+const drawer = ref(null)
 
 const items = [
   {
@@ -20,13 +20,30 @@ const items = [
     to: '/terminal'
   },
 ]
+
+const isMobile = computed( () => windowWidth.value < 768 )
+
+const windowWidth = ref(0)
+
+const updateWidth = () => {
+  windowWidth.value = window.innerWidth;
+}
+onMounted( () => {
+  window.addEventListener('resize', updateWidth);
+})
 </script>
 
 <template>
+  <div v-if="isMobile" @click.stop="drawer = !drawer">
+    hello
+    <!-- <v-toolbar absolute right>
+      <v-toolbar-side-icon  @click.stop="drawer = !drawer"></v-toolbar-side-icon>
+    </v-toolbar> -->
+  </div>
   <v-navigation-drawer
     v-model="drawer"
     location="left"
-    permanent
+    :permanent="!isMobile"
   >
     <div class="d-flex flex-column h-full">
       <div>
@@ -34,7 +51,7 @@ const items = [
         <v-list>
           <v-list-item v-for="item in items" :key="item.title" :to="item.to" :ripple="false">
             <v-list-item-icon>
-              <!-- <v-icon>{{ item.icon }}</v-icon> -->
+              <v-icon>{{ item.icon }}</v-icon>
             </v-list-item-icon>
             <v-list-item-title>{{ item.title }}</v-list-item-title>
           </v-list-item>
@@ -45,13 +62,9 @@ const items = [
       </div>
     </div>
   </v-navigation-drawer>
-  <div class="padding--nav">
-    <router-view>
+  <div class="padding--nav" :class="{ 'pa-0': isMobile }">
+    <router-view :isMobile="isMobile">
     </router-view>
   </div>
 
 </template>
-
-<style scoped>
-
-</style>

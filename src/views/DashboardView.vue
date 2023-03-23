@@ -178,6 +178,8 @@ const tableData = [
   },
 ]
 
+const props = defineProps(['isMobile'])
+
 const x = ref(5)
 </script>
 
@@ -185,7 +187,7 @@ const x = ref(5)
   <div class="dashboard">
       
     <!-- menu bar -->
-    <div class="menu--bar">
+    <div class="menu--bar" :class="{ 'pa-0': isMobile }">
       <ul>
         <li v-for="item in menusList" :key="item.name">
           <v-btn class="menu--bar--btn">
@@ -210,6 +212,7 @@ const x = ref(5)
     <v-card>
       <v-tabs
         v-model="tab"
+        :class="{ 'pa-0': isMobile }"
       >
         <v-tab :value="1">Overview</v-tab>
         <v-tab :value="2">CPU</v-tab>
@@ -220,7 +223,7 @@ const x = ref(5)
         <v-window-item :value="1" class="overview">
           <!-- Overview -->
           <div class="d-flex">
-            <v-table>
+            <v-table :class="{ 'pa-0': isMobile }">
               <thead>
                 <tr>
                   <th class="text-left">Image</th>

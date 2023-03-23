@@ -9,4 +9,3 @@ import vuetify from './vuetify'
 
 const app = createApp(App);
 app.use(store).use(router).use(vuetify).mount('#app')
-console.log('created');
