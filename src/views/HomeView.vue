@@ -29,6 +29,7 @@ const updateWidth = () => {
   windowWidth.value = window.innerWidth;
 }
 onMounted( () => {
+  updateWidth()
   window.addEventListener('resize', updateWidth);
 })
 </script>
@@ -48,6 +49,7 @@ onMounted( () => {
     <div class="d-flex flex-column h-full">
       <div>
         <h2>logo here</h2>
+        <!-- <h2>Window width: {{ window.innerWidth }}</h2> -->
         <v-list>
           <v-list-item v-for="item in items" :key="item.title" :to="item.to" :ripple="false">
             <v-list-item-icon>
