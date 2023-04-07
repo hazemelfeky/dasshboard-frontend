@@ -1,0 +1,71 @@
+@import "../variables";
+
+.terminal {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  .container {
+    background-color: #134D88;
+    width: 80%;
+    height: 90%;
+    max-height: 575px;
+    max-width: 920px;
+    border-radius: 1rem;
+
+    .close--btn {
+      width: 1rem;
+      height: 1rem;
+      background-color: red;
+      border-radius: 50%;
+      margin-top: 1rem;
+      margin-left: 1rem;
+    }
+
+    .v-card {
+      background-color: unset;
+      box-shadow: none;
+
+      .v-tab {
+        display: block;
+        text-align: start;
+        padding-left: 0.5rem;
+        min-width: 9rem;
+        
+        .v-btn__content {
+          display: flex;
+          justify-content: space-between;
+        }
+        &.v-slide-group-item--active {
+          background-color: #D9D9D9;
+          border-radius: 1rem 1rem 0 0 !important;
+          transition: all 0.1s ease;
+        }
+        .close--btn {
+          display: none;
+        }
+        &:hover {
+          .close--btn {
+            display: block;
+          }
+        }
+      }
+
+      .add--tab {
+        color: #D9D9D9;
+        font-size: 1.5rem;
+        padding-left: 0.5rem;
+      }
+
+      .v-card-text {
+        padding: 0;
+        .v-window-item {
+          color: white;
+          padding-left: 0.5rem;
+        }
+      }
+    }
+
+  }
+}
