@@ -1,6 +1,4 @@
 <script setup>
-import { ref } from "vue"
-
 const tab = ref('0')
 
 const menusList = [

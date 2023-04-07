@@ -1,6 +1,4 @@
 <script setup>
-import { ref, computed, onMounted } from "vue"
-
 const drawer = ref(null)
 
 const items = [
