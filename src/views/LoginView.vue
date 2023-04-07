@@ -1,7 +1,4 @@
 <script setup>
-import { ref } from "vue"
-import customInput from "@/components/customInput.vue";
-import alertPopup from "@/components/alertPopup.vue";
 
 const dialog = ref(false)
 const type = ref('success')

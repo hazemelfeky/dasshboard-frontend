@@ -1,5 +1,4 @@
 <script setup>
-import BarChart from "@/components/BarChart.vue";
 import { ref } from "vue"
 
 const tab = ref('0')
