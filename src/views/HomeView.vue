@@ -5,17 +5,20 @@ const items = [
   {
     title: 'Dashboard',
     value: 'dashboard',
-    to: '/dashboard'
+    to: '/dashboard',
+    icon: '🎫'
   },
   {
     title: 'File explorer',
     value: 'explorer',
-    to: '/explorer'
+    to: '/explorer',
+    icon: '🌎'
   },
   {
     title: 'Terminal',
     value: 'terminal',
-    to: '/terminal'
+    to: '/terminal',
+    icon: '📟'
   },
 ]
 
@@ -50,10 +53,10 @@ onMounted( () => {
         <!-- <h2>Window width: {{ window.innerWidth }}</h2> -->
         <v-list>
           <v-list-item v-for="item in items" :key="item.title" :to="item.to" :ripple="false">
-            <v-list-item-icon>
+            <!-- <v-list-item-icon>
               <v-icon>{{ item.icon }}</v-icon>
-            </v-list-item-icon>
-            <v-list-item-title>{{ item.title }}</v-list-item-title>
+            </v-list-item-icon> -->
+            <v-list-item-title>{{ item.icon }}  {{ item.title }}</v-list-item-title>
           </v-list-item>
         </v-list>
       </div>
