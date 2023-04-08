@@ -1,5 +1,9 @@
 @import "../variables";
 
+.v-navigation-drawer {
+  border: none !important;
+}
+
 .v-navigation-drawer__content {
   padding-left: 1.5rem;
 }
