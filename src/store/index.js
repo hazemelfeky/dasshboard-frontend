@@ -2,12 +2,16 @@ import { defineStore } from "pinia";
 
 export const useTerminalStore = defineStore("terminal", () => {
   let id = 0;
-  const tab = ref(0);
   const tabs = ref([
     {
       id,
       value: 0,
       name: 0,
+      /*
+        thread:
+          address > instruction
+          message
+      */
       threads: [
         { address: "hazem ", instruction: "instruction", message: "message" },
       ],
@@ -32,5 +36,10 @@ export const useTerminalStore = defineStore("terminal", () => {
     tabs.value = tabs.value.filter((el) => el.id != id);
   };
 
-  return { tab, tabs, addTab, closeTab };
+  const addNewInstruction = (tab, newThread) => {
+    tab.threads.push(newThread)
+    tab.currentThread = { address: "hazem " }
+  }
+
+  return { tabs, addNewInstruction, addTab, closeTab };
 });
