@@ -247,11 +247,11 @@ const x = ref(5)
                 </tr>
               </tbody>
             </v-table>
-            <div>
+            <!-- <div>
               <h2>Chart.js</h2>
               <button @click="x++">click</button>
               <bar-chart :chart-data="[x,72,50]" />
-            </div>
+            </div> -->
           </div>
         </v-window-item>
         <v-window-item :value="2">
