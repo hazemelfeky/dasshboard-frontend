@@ -7,7 +7,7 @@
         </template>
       </v-tooltip>
       <v-card>
-        <v-tabs v-model="tab" center-active>
+        <v-tabs v-model="cuurentTab" center-active>
           <v-tab v-for="tab in tabs" :key="tab.id" :value="tab.value">
             <p>{{ tab.name }}</p>
             <button
@@ -20,7 +20,7 @@
         </v-tabs>
 
         <v-card-text id="terminal-view">
-          <v-window v-model="tab">
+          <v-window v-model="cuurentTab">
             <terminal-thread v-for="tab in tabs" :key="tab.id" :tab="tab" @clickEnter="handleEnter" />
           </v-window>
         </v-card-text>
@@ -31,19 +31,25 @@
 
 <script setup>
 import { useTerminalStore } from '@/store'
+import { storeToRefs } from 'pinia'
 
+const cuurentTab = ref(0);
 // access the `store` variable anywhere in the component ✨
 const store = useTerminalStore()
-const tabs = store.tabs
-const tab = store.tab;
+const { tabs } = storeToRefs(store)
 
 const addTab = store.addTab
 const closeTab = store.closeTab
+const addNewInstruction = store.addNewInstruction
 
 const handleEnter = async (instruction, tab) => {
   const message = "message".repeat(tab.threads.length) // TODO: message
-  tab.threads.push({ ...tab.currentThread, instruction, message })
-  tab.currentThread = { address: "hazem " }
+  const newThread = {
+    address: tab.currentThread.address,
+    instruction,
+    message
+  }
+  addNewInstruction(tab, newThread)
 
   setTimeout( () => {
     const terminalView = document.getElementById('terminal-view')
@@ -52,9 +58,9 @@ const handleEnter = async (instruction, tab) => {
 }
 
 // fix bug → when closeTab, tab = undefined
-let currentTab = 0;
-watch(tab, (newVal) => {
-  if (newVal) currentTab = tab.value;
-  tab.value = newVal == undefined ? currentTab : newVal;
+let tempTab = 0;
+watch(cuurentTab, (newVal) => {
+  if (newVal) tempTab = newVal;
+  cuurentTab.value = newVal == undefined ? tempTab : newVal;
 });
 </script>
