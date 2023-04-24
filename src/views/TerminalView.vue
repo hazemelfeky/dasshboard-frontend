@@ -30,25 +30,17 @@
 </template>
 
 <script setup>
-let id = 0;
-const tab = ref(0);
+import { useTerminalStore } from '@/store'
 
-const tabs = ref([
-  {
-    id,
-    value: 0,
-    name: 0,
-    threads: [
-      { address: "hazem ", instruction: "instruction", message: "message" },
-    ],
-    currentThread: { address: "hazem " },
-    // TODO: add → ended: true to current, to simulate if it's run something like yarn dev
-    // so no go directly to next instuction
-  },
-]);
+// access the `store` variable anywhere in the component ✨
+const store = useTerminalStore()
+const tabs = store.tabs
+const tab = store.tab;
+
+const addTab = store.addTab
+const closeTab = store.closeTab
 
 const handleEnter = async (instruction, tab) => {
-  
   const message = "message".repeat(tab.threads.length) // TODO: message
   tab.threads.push({ ...tab.currentThread, instruction, message })
   tab.currentThread = { address: "hazem " }
@@ -58,21 +50,6 @@ const handleEnter = async (instruction, tab) => {
     terminalView.scrollTop = terminalView.scrollHeight + 200
   })
 }
-
-const addTab = () => {
-  id++;
-  tabs.value.push({
-    id,
-    value: id,
-    name: id,
-    threads: [],
-    currentThread: { address: "hazem " },
-  });
-};
-
-const closeTab = (id) => {
-  tabs.value = tabs.value.filter((el) => el.id != id);
-};
 
 // fix bug → when closeTab, tab = undefined
 let currentTab = 0;
