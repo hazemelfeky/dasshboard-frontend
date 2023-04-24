@@ -37,10 +37,7 @@ onMounted( () => {
 
 <template>
   <div v-if="isMobile" @click.stop="drawer = !drawer">
-    hello
-    <!-- <v-toolbar absolute right>
-      <v-toolbar-side-icon  @click.stop="drawer = !drawer"></v-toolbar-side-icon>
-    </v-toolbar> -->
+    📃
   </div>
   <v-navigation-drawer
     v-model="drawer"
