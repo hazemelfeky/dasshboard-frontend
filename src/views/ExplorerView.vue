@@ -26,7 +26,7 @@ const handleFileClicked = (file) => {
       </v-btn>
     </div>
     <div class="files--container">
-      <div v-for="file in files" :key="file.id" class="file" @dblclick="handleFileClicked(file)">
+      <div v-for="file in files" :key="file.id" class="file" @click="handleFileClicked(file)">
         <img src="@/assets/folder.png" alt="icon" />
         <p>{{ file.name }}</p>
       </div>
