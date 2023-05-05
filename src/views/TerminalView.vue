@@ -1,5 +1,5 @@
 <template>
-  <div class="terminal">
+  <div class="terminal-page">
     <div class="container">
       <v-tooltip text="Kill all">
         <template v-slot:activator="{ props }">

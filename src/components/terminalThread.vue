@@ -1,26 +1,82 @@
 <template>
   <v-window-item :value="tab.value">
-    <div v-if="tab.threads.length > 0" class="threads" v-for="thread in tab.threads">
-      <p>{{ thread.address }} > {{ thread.instruction }}</p>
-      <p>{{ thread.message }}</p>
-    </div>
-    <div class="current-thread">
-      {{ tab.currentThread.address }} >
-      <input v-model="instraction" @keydown.enter="handleEnter(instraction, tab)" />
-    </div>
+    <!-- <p>{{ tab.id }}</p> -->
+    <div
+      :id="`terminal-container-${tab.id}`"
+      :class="`terminal-container terminal-container-${tab.id}`"
+    ></div>
   </v-window-item>
 </template>
 
 <script setup>
-defineProps({
-  tab: Object
-})
+import "../assets/xterm/dist/xterm.js";
+import "../assets/xterm/dist/addons/fit/fit.js";
+import io from "socket.io-client";
 
-const emit = defineEmits()
+const props = defineProps({ tab: { type: Object } });
 
-const instraction = ref("")
-const handleEnter = (instr, tab) => {
-  emit('clickEnter', instr, tab)
-  instraction.value = ""
-}
+onMounted(() => {
+  // const term = new Terminal({ cols: 80, rows: 24, cursorBlink: 2 });
+  const term = new Terminal({ cursorBlink: true });
+  const terminalContainerRef = document.querySelector(
+    `#terminal-container-${props.tab.id}`
+  ); // -${props.tab.id}
+  term.open(terminalContainerRef);
+  term.fit();
+  term.focus();
+  var resizeInterval;
+  window.onresize = function () {
+    clearTimeout(resizeInterval);
+    resizeInterval = setTimeout(resize, 400);
+  };
+
+  // Recalculates the terminal Columns / Rows and sends new size to SSH server + xtermjs
+  function resize() {
+    console.log("resize");
+    if (term) {
+      term.fit();
+      term.focus();
+    }
+  }
+
+  // TODO
+  // this is a work around to hide div named helpers
+  // when change it from scss file, the whole terminal component is disappered
+  setTimeout(() => {
+    const viewport = document.querySelector(".xterm-viewport");
+    viewport.style.display = "none";
+    const helpers = document.querySelector(".xterm-helpers");
+    helpers.style.display = "none";
+  });
+
+  const socket = io("http://localhost:3000", {
+    query: { EIO: 3, a7a: 4 },
+  });
+  socket.on("connect", function () {
+    // term.write("\r\n*** Connected to backend***\r\n");
+    console.log("connected 🤙");
+
+    // Browser -> Backend
+    term.on("data", function (data) {
+      //console.log(data);
+      //                        alert("Not allowd to write. Please don't remove this alert without permission of Ankit or Samir sir. It will be a problem for server'");
+      socket.emit("data", data);
+    });
+
+    // Backend -> Browser
+    socket.on("data", function (data) {
+      term.write(data);
+    });
+
+    socket.on("disconnect", function () {
+      term.write("\r\n*** Disconnected from backend***\r\n");
+    });
+  });
+});
 </script>
+
+<style>
+.terminal-container {
+  height: 100%;
+}
+</style>

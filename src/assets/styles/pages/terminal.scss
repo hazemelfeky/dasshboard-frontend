@@ -1,6 +1,6 @@
 @import "../variables";
 
-.terminal {
+.terminal-page {
   height: 100vh;
   display: flex;
   justify-content: center;
@@ -60,31 +60,79 @@
         padding-left: 0.5rem;
       }
 
+      // .xterm-helpers {
+      //   display: none;
+      // }
+
       .v-card-text {
         padding: 0;
         height: 80%;
         overflow: auto;
-        .v-window-item {
-          color: white;
-          padding-left: 0.5rem;
-        }
 
-        .threads {
-          color: inherit;
-          p {
-            color: inherit;
+        .v-window {
+          height: 100%;
+
+          .v-window-item {
+            height: 100%;
+
+            .terminal:not(.xterm-cursor-style-underline):not(
+                .xterm-cursor-style-bar
+              ).focus.xterm-cursor-blink-on
+              .terminal-cursor {
+              background-color: transparent;
+              color: inherit;
+            }
+            .terminal.xterm-cursor-style-bar.focus.xterm-cursor-blink.xterm-cursor-blink-on
+              .terminal-cursor::before,
+            .terminal.xterm-cursor-style-underline.focus.xterm-cursor-blink.xterm-cursor-blink-on
+              .terminal-cursor::before {
+              background-color: transparent;
+            }
+            .terminal.xterm-cursor-style-bar.focus.xterm-cursor-blink
+              .terminal-cursor::before,
+            .terminal.xterm-cursor-style-underline.focus.xterm-cursor-blink
+              .terminal-cursor::before {
+              background-color: #fff;
+            }
+
+            .terminal-container {
+              display: block;
+              padding: 2px;
+            }
+
+            .terminal-container .terminal {
+              background-color: inherit;
+              padding: 2px;
+
+              .xterm-rows {
+                div {
+                  color: white;
+                }
+              }
+            }
+
+            .terminal-container .terminal:focus .terminal-cursor {
+              background-color: #fafafa;
+            }
           }
         }
 
-        .current-thread {
-          display: flex;
-          color: white;
-          gap: 0.3rem;
-          input {
-            color: white;
-            outline: none;
-          }
-        }
+        // .threads {
+        //   color: inherit;
+        //   p {
+        //     color: inherit;
+        //   }
+        // }
+
+        // .current-thread {
+        //   display: flex;
+        //   color: white;
+        //   gap: 0.3rem;
+        //   input {
+        //     color: white;
+        //     outline: none;
+        //   }
+        // }
       }
     }
   }
