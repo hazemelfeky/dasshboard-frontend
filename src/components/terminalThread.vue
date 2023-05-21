@@ -1,11 +1,8 @@
 <template>
-  <v-window-item :value="tab.value">
-    <!-- <p>{{ tab.id }}</p> -->
-    <div
-      :id="`terminal-container-${tab.id}`"
-      :class="`terminal-container terminal-container-${tab.id}`"
-    ></div>
-  </v-window-item>
+  <div
+    :id="`terminal-container-${tab.id}`"
+    :class="`terminal-container terminal-container-${tab.id}`"
+  ></div>
 </template>
 
 <script setup>
@@ -48,7 +45,7 @@ onMounted(() => {
     const helpers = document.querySelector(".xterm-helpers");
     helpers.style.display = "none";
   });
-  
+
   const socket = io("http://localhost:3000", {
     query: { EIO: 3, a7a: 4 },
   });

@@ -21,7 +21,9 @@
 
         <v-card-text id="terminal-view">
           <v-window v-model="cuurentTab">
-            <terminal-thread v-for="tab in tabs" :key="tab.id" :tab="tab" />
+            <v-window-item v-for="tab in tabs" :key="tab.id" :value="tab.value">
+              <terminal-thread :tab="tab" />
+            </v-window-item>
           </v-window>
         </v-card-text>
       </v-card>
@@ -30,16 +32,16 @@
 </template>
 
 <script setup>
-import { useTerminalStore } from '@/store'
-import { storeToRefs } from 'pinia'
+import { useTerminalStore } from "@/store";
+import { storeToRefs } from "pinia";
 
 const cuurentTab = ref(0);
 // access the `store` variable anywhere in the component ✨
-const store = useTerminalStore()
-const { tabs } = storeToRefs(store)
+const store = useTerminalStore();
+const { tabs } = storeToRefs(store);
 
-const addTab = store.addTab
-const closeTab = store.closeTab
+const addTab = store.addTab;
+const closeTab = store.closeTab;
 
 // fix bug → when closeTab, tab = undefined
 let tempTab = 0;
