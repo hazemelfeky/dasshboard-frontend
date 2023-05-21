@@ -21,7 +21,7 @@
 
         <v-card-text id="terminal-view">
           <v-window v-model="cuurentTab">
-            <terminal-thread v-for="tab in tabs" :key="tab.id" :tab="tab" @clickEnter="handleEnter" />
+            <terminal-thread v-for="tab in tabs" :key="tab.id" :tab="tab" />
           </v-window>
         </v-card-text>
       </v-card>
@@ -40,22 +40,6 @@ const { tabs } = storeToRefs(store)
 
 const addTab = store.addTab
 const closeTab = store.closeTab
-const addNewInstruction = store.addNewInstruction
-
-const handleEnter = async (instruction, tab) => {
-  const message = "message".repeat(tab.threads.length) // TODO: message
-  const newThread = {
-    address: tab.currentThread.address,
-    instruction,
-    message
-  }
-  addNewInstruction(tab, newThread)
-
-  setTimeout( () => {
-    const terminalView = document.getElementById('terminal-view')
-    terminalView.scrollTop = terminalView.scrollHeight + 200
-  })
-}
 
 // fix bug → when closeTab, tab = undefined
 let tempTab = 0;

@@ -48,18 +48,15 @@ onMounted(() => {
     const helpers = document.querySelector(".xterm-helpers");
     helpers.style.display = "none";
   });
-
+  
   const socket = io("http://localhost:3000", {
     query: { EIO: 3, a7a: 4 },
   });
   socket.on("connect", function () {
-    // term.write("\r\n*** Connected to backend***\r\n");
     console.log("connected 🤙");
 
     // Browser -> Backend
     term.on("data", function (data) {
-      //console.log(data);
-      //                        alert("Not allowd to write. Please don't remove this alert without permission of Ankit or Samir sir. It will be a problem for server'");
       socket.emit("data", data);
     });
 
