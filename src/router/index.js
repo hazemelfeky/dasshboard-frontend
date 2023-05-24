@@ -3,6 +3,7 @@ import SplashView from '@/views/SplashView.vue'
 import LoginView from '@/views/LoginView.vue'
 import DashboardView from '@/views/DashboardView.vue'
 import TerminalView from '@/views/TerminalView.vue'
+import DockerView from '@/views/DockerView.vue'
 import ExplorerView from '@/views/ExplorerView.vue'
 import HomeView from '@/views/HomeView.vue'
 
@@ -34,6 +35,10 @@ const routes = [
       {
         path: '/terminal',
         component: TerminalView,
+      },
+      {
+        path: '/docker',
+        component: DockerView,
       },
     ]
   },

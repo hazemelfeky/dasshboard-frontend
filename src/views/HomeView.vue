@@ -23,6 +23,12 @@ const items = [
     to: "/terminal",
     icon: "📟",
   },
+  {
+    title: "Docker",
+    value: "docker",
+    to: "/docker",
+    icon: "📦",
+  },
 ];
 
 const isMobile = computed(() => windowWidth.value < 768);
@@ -72,7 +78,7 @@ const handleLogout = () => {
       </div>
     </div>
   </v-navigation-drawer>
-  <div class="padding--nav" :class="{ 'pa-0': isMobile }">
+  <div class="padding--nav h-full" :class="{ 'pa-0': isMobile }">
     <router-view :isMobile="isMobile"> </router-view>
   </div>
 </template>
