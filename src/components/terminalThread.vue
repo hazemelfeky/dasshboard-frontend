@@ -9,6 +9,7 @@
 import "../assets/xterm/dist/xterm.js";
 import "../assets/xterm/dist/addons/fit/fit.js";
 import io from "socket.io-client";
+import axios from "axios";
 
 const props = defineProps({ tab: { type: Object } });
 
@@ -46,26 +47,34 @@ onMounted(() => {
     helpers.style.display = "none";
   });
 
-  const socket = io("http://localhost:3000", {
-    query: { EIO: 3, a7a: 4 },
-  });
-  socket.on("connect", function () {
-    console.log("connected 🤙");
+  axios
+    .post("http://localhost:8080/terminal", {
+      host: "18.118.162.195",
+      username: "ubuntu",
+      password: "1",
+    })
+    .then(() => {
+      const socket = io("http://localhost:3000", {
+        query: { EIO: 3, a7a: 4 },
+      });
+      socket.on("connect", function () {
+        console.log("connected 🤙");
 
-    // Browser -> Backend
-    term.on("data", function (data) {
-      socket.emit("data", data);
-    });
+        // Browser -> Backend
+        term.on("data", function (data) {
+          socket.emit("data", data);
+        });
 
-    // Backend -> Browser
-    socket.on("data", function (data) {
-      term.write(data);
-    });
+        // Backend -> Browser
+        socket.on("data", function (data) {
+          term.write(data);
+        });
 
-    socket.on("disconnect", function () {
-      term.write("\r\n*** Disconnected from backend***\r\n");
+        socket.on("disconnect", function () {
+          term.write("\r\n*** Disconnected from backend***\r\n");
+        });
+      });
     });
-  });
 });
 </script>
 
