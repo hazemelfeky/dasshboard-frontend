@@ -1,6 +1,6 @@
 <template>
   <div class="docker-page">
-    <div class="explorer">
+    <div class="navigator">
       <div class="container">
         <div class="head">
           <p>Containers</p>
@@ -44,7 +44,7 @@
   width: 100%;
   height: 100%;
 
-  .explorer {
+  .navigator {
     display: flex;
     flex-direction: column;
     flex: 0 0 30%;
