@@ -7,10 +7,21 @@ const files = [
   { id: 3, name: "folder 3", type: "folder" },
   { id: 4, name: "folder 4", type: "folder" },
   { id: 5, name: "folder 5", type: "folder" },
-  { id: 6, name: "folder 6", type: "folder" },
+  {
+    id: 6,
+    name: "image 1",
+    type: "image",
+    link: "https://picsum.photos/200/200",
+  },
+  {
+    id: 7,
+    name: "file 1",
+    type: "file",
+  },
 ];
 
 const selected = ref({ id: null });
+const imageInView = ref("");
 
 function hasParentWithAttribute(element, parentCondition) {
   let parent = element.parentElement;
@@ -61,6 +72,38 @@ const handleFileClicked = (file) => {
   }
 };
 
+const openFolder = (folder) => {
+  console.log("open folder");
+};
+
+const openImage = (imageFile) => {
+  imageInView.value = imageFile.link;
+};
+
+const closeImage = () => {
+  imageInView.value = "";
+};
+
+const openFile = (file) => {
+  console.log("can't open file");
+};
+
+const handleFileDbclicked = (file) => {
+  switch (file.type) {
+    case "folder":
+      openFolder(file);
+      break;
+
+    case "image":
+      openImage(file);
+      break;
+
+    default:
+      openFile(file);
+      break;
+  }
+};
+
 const handleCopy = () => {
   console.log("copy file ", selected.value.id);
 };
@@ -95,12 +138,28 @@ const handleDelete = () => {
         :file-id="file.id"
         :class="{ selected: file.id == selected?.id }"
         @click="handleFileClicked(file)"
+        @dblclick="handleFileDbclicked(file)"
         ref="fileElement"
       >
-        <img src="@/assets/folder.png" alt="icon" />
+        <img
+          v-if="file.type == 'folder'"
+          src="@/assets/folder.png"
+          alt="icon"
+        />
+        <img
+          v-else-if="file.type == 'image'"
+          src="@/assets/image.png"
+          alt="icon"
+        />
+        <img v-else src="@/assets/file.png" alt="icon" />
         <p>{{ file.name }}</p>
       </div>
     </div>
+    <transition name="fade" appear mode="out-in">
+      <div class="image-viewer" v-show="imageInView" @click="closeImage">
+        <img v-show="imageInView" :src="imageInView" alt="image-viewer" />
+      </div>
+    </transition>
   </div>
 </template>
 
