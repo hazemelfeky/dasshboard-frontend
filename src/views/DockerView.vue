@@ -7,7 +7,7 @@
         </div>
         <v-expansion-panels variant="accordion">
           <v-expansion-panel
-            v-for="i in 3"
+            v-for="i in containers"
             :key="i"
             title="Item"
             text="Lorem consequat."
@@ -17,11 +17,11 @@
       <div class="images">
         <div class="head">
           <p>Images</p>
-          <v-btn>➕</v-btn>
+          <v-btn @click="addImage">➕</v-btn>
         </div>
         <v-expansion-panels variant="accordion">
           <v-expansion-panel
-            v-for="i in 4"
+            v-for="i in images"
             :key="i"
             title="Item"
             text="Lorem consequat."
@@ -30,13 +30,30 @@
       </div>
     </div>
     <div class="content">
-      <!-- <terminal-thread :tab="{ id: 1, value: 1 }" /> -->
       <p>terminal here</p>
     </div>
   </div>
 </template>
 
-<script setup></script>
+<script setup>
+import { useStore } from "@/store";
+import { storeToRefs } from "pinia";
+
+const store = useStore();
+const getContainers = store.getContainers;
+const getImages = store.getImages;
+const addImage = store.addImage;
+const { images, containers } = storeToRefs(store);
+
+onMounted( async () => {
+  await getContainers();
+  await getImages();
+});
+
+const handleAddImage = async () => {
+  await addImage();
+}
+</script>
 
 <style lang="scss">
 .docker-page {
