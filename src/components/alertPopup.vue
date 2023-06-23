@@ -2,7 +2,8 @@
 import { useRouter } from 'vue-router';
 
 const props = defineProps({
-  type: { required: true , validator: (value) => ['error', 'success'].includes(value)}
+  type: { required: true , validator: (value) => ['error', 'success'].includes(value)},
+  // callback: { type: Function, required: false }
 })
 
 const emit = defineEmits()
