@@ -26,15 +26,17 @@ export const useStore = defineStore("terminal", () => {
     localStorage.setItem("host", host.value);
     localStorage.setItem("username", username.value);
     localStorage.setItem("password", password.value);
-  }
+  };
+
+  // This function to handle auth method from backend
+  // It's required to add auth data (host,username,password) as query param
+  const addAuthToRequest = (endpoint) => {
+    return `${endpoint}?host=${host.value}&username=${username.value}&password=${password.value}`;
+  };
 
   const getDashboard = async () => {
-    const params = {
-      host: host.value,
-      username: username.value,
-      password: password.value,
-    };
-    const data = await axios.get("processes", { params });
+    console.log(addAuthToRequest("processes"));
+    const data = await axios.get(addAuthToRequest("processes"));
     dashboardData.value = data.data;
     return data;
   };
@@ -59,37 +61,37 @@ export const useStore = defineStore("terminal", () => {
   const images = ref([]);
 
   const getContainers = async () => {
-    const params = {
-      host: host.value,
-      username: username.value,
-      password: password.value,
-    };
-    const data = await axios.get("docker/containers", { params });
+    const data = await axios.get(addAuthToRequest("docker/containers"));
     containers.value = data.data;
     return data;
   };
 
   const getImages = async () => {
-    const params = {
-      host: host.value,
-      username: username.value,
-      password: password.value,
-    };
-    const data = await axios.get("docker/images", { params });
+    const data = await axios.get(addAuthToRequest("docker/images"));
     images.value = data.data;
     return data;
   };
 
-  const addImage = async () => {
-    // const params = {
-    //   host: host.value,
-    //   username: username.value,
-    //   password: password.value,
+  const createContainer = async (payload) => {
+    // const payload = {
+    //   options: "--name hazem",
+    //   image: "alpine",
+    //   tag: "latest",
     // };
-    // const data = await axios.get("docker/images");
-    // images.value = data.data;
-    // return data;
-    console.log('addImage');
+    await axios.post(addAuthToRequest("docker/container/create"), payload);
+  };
+
+  const startContainer = async (id) => {
+    await axios.patch(addAuthToRequest("/docker/container/start"), { id });
+  };
+  const pullImage = async (payload) => {
+    const data = await axios.post(
+      addAuthToRequest("docker/image/pull"),
+      payload
+    );
+    images.value = data.data;
+    return data;
+    // console.log("pullImage");
   };
 
   return {
@@ -106,6 +108,8 @@ export const useStore = defineStore("terminal", () => {
     closeTab,
     getContainers,
     getImages,
-    addImage,
+    createContainer,
+    startContainer,
+    pullImage,
   };
 });
