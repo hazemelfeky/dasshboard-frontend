@@ -32,12 +32,12 @@
 </template>
 
 <script setup>
-import { useTerminalStore } from "@/store";
+import { useStore } from "@/store";
 import { storeToRefs } from "pinia";
 
 const cuurentTab = ref(0);
 // access the `store` variable anywhere in the component ✨
-const store = useTerminalStore();
+const store = useStore();
 const { tabs } = storeToRefs(store);
 
 const addTab = store.addTab;
