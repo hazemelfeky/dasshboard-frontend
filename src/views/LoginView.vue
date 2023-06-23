@@ -1,16 +1,27 @@
 <script setup>
+import { useStore } from "@/store";
+import { storeToRefs } from "pinia";
+
+const store = useStore();
+
 const dialog = ref(false);
 const type = ref("success");
 
-const ip = ref("");
-const username = ref("");
-const password = ref("");
+const { host, username, password } = storeToRefs(store);
 
-const handleSubmit = () => {
-  if (ip.value == 1) {
+const getDashboard = store.getDashboard;
+
+const handleSubmit = async () => {
+  if (host.value == 1) {
     type.value = "success";
   } else {
-    type.value = "error";
+    const data = await getDashboard();
+    console.log(data.status);
+    if (data.status == 200) {
+      type.value = "success";
+    } else {
+      type.value = "error";
+    }
   }
   dialog.value = true;
 };
@@ -21,12 +32,10 @@ const handleSubmit = () => {
     <h1 class="logo"><img src="../assets/logo.png" alt="word logo" /></h1>
     <form class="login--form" @submit.prevent="handleSubmit">
       <div class="form--inputs">
-        <customInput v-model="ip" placeholder="ip"> </customInput>
+        <customInput v-model="host" placeholder="ip"> </customInput>
         <customInput v-model="username" placeholder="username"> </customInput>
         <customInput v-model="password" type="password" placeholder="password">
         </customInput>
-        <!-- <input v-model="username" type="text" placeholder="username"/>
-          <input type="password" placeholder="password"/> -->
       </div>
       <button>login</button>
     </form>

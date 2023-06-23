@@ -1,25 +1,40 @@
 import { defineStore } from "pinia";
+import axios from "@/axios";
+import { ref } from "vue";
 
-export const useTerminalStore = defineStore("terminal", () => {
+export const useStore = defineStore("terminal", () => {
   let id = 0;
   const tabs = ref([
     {
       id,
       value: 0,
       name: 0,
-      /*
-        thread:
-          address > instruction
-          message
-      */
       threads: [
         { address: "hazem ", instruction: "instruction", message: "message" },
       ],
       currentThread: { address: "hazem " },
-      // TODO: add → ended: true to current, to simulate if it's run something like yarn dev
-      // so no go directly to next instuction
     },
   ]);
+
+  const dashboardData = ref([]);
+
+  const host = ref(null);
+  const username = ref(null);
+  const password = ref(null);
+
+  const getDashboard = async () => {
+    const params = {
+      host: host.value,
+      username: username.value,
+      password: password.value,
+    };
+    console.log("here 1");
+    const data = await axios.get("processes", { params });
+    console.log("here 2");
+    console.log(data.data);
+    dashboardData.value = data.data;
+    return data;
+  };
 
   const addTab = () => {
     id++;
@@ -36,10 +51,14 @@ export const useTerminalStore = defineStore("terminal", () => {
     tabs.value = tabs.value.filter((el) => el.id != id);
   };
 
-  const addNewInstruction = (tab, newThread) => {
-    tab.threads.push(newThread)
-    tab.currentThread = { address: "hazem " }
-  }
-
-  return { tabs, addNewInstruction, addTab, closeTab };
+  return {
+    host,
+    username,
+    password,
+    dashboardData,
+    tabs,
+    getDashboard,
+    addTab,
+    closeTab,
+  };
 });
