@@ -18,9 +18,15 @@ export const useStore = defineStore("terminal", () => {
 
   const dashboardData = ref([]);
 
-  const host = ref(null);
-  const username = ref(null);
-  const password = ref(null);
+  const host = ref(localStorage.getItem("host") ?? null);
+  const username = ref(localStorage.getItem("username") ?? null);
+  const password = ref(localStorage.getItem("password") ?? null);
+
+  const saveAuthData = () => {
+    localStorage.setItem("host", host.value);
+    localStorage.setItem("username", username.value);
+    localStorage.setItem("password", password.value);
+  }
 
   const getDashboard = async () => {
     const params = {
@@ -28,10 +34,7 @@ export const useStore = defineStore("terminal", () => {
       username: username.value,
       password: password.value,
     };
-    console.log("here 1");
     const data = await axios.get("processes", { params });
-    console.log("here 2");
-    console.log(data.data);
     dashboardData.value = data.data;
     return data;
   };
@@ -51,14 +54,58 @@ export const useStore = defineStore("terminal", () => {
     tabs.value = tabs.value.filter((el) => el.id != id);
   };
 
+  // Docker
+  const containers = ref([]);
+  const images = ref([]);
+
+  const getContainers = async () => {
+    const params = {
+      host: host.value,
+      username: username.value,
+      password: password.value,
+    };
+    const data = await axios.get("docker/containers", { params });
+    containers.value = data.data;
+    return data;
+  };
+
+  const getImages = async () => {
+    const params = {
+      host: host.value,
+      username: username.value,
+      password: password.value,
+    };
+    const data = await axios.get("docker/images", { params });
+    images.value = data.data;
+    return data;
+  };
+
+  const addImage = async () => {
+    // const params = {
+    //   host: host.value,
+    //   username: username.value,
+    //   password: password.value,
+    // };
+    // const data = await axios.get("docker/images");
+    // images.value = data.data;
+    // return data;
+    console.log('addImage');
+  };
+
   return {
     host,
     username,
     password,
     dashboardData,
     tabs,
+    containers,
+    images,
+    saveAuthData,
     getDashboard,
     addTab,
     closeTab,
+    getContainers,
+    getImages,
+    addImage,
   };
 });
