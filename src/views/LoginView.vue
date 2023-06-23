@@ -10,15 +10,16 @@ const type = ref("success");
 const { host, username, password } = storeToRefs(store);
 
 const getDashboard = store.getDashboard;
+const saveAuthData = store.saveAuthData;
 
 const handleSubmit = async () => {
   if (host.value == 1) {
     type.value = "success";
   } else {
     const data = await getDashboard();
-    console.log(data.status);
     if (data.status == 200) {
       type.value = "success";
+      saveAuthData();
     } else {
       type.value = "error";
     }
