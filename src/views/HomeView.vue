@@ -44,7 +44,7 @@ onMounted(() => {
 });
 
 const handleLogout = () => {
-  // TODO
+  localStorage.clear();
   router.push("/");
 };
 </script>
@@ -56,7 +56,6 @@ const handleLogout = () => {
       <div>
         <h1 class="logo"><img src="../assets/logo.png" alt="word logo" /></h1>
 
-        <!-- <h2>Window width: {{ window.innerWidth }}</h2> -->
         <v-list>
           <v-list-item
             v-for="item in items"
@@ -64,9 +63,6 @@ const handleLogout = () => {
             :to="item.to"
             :ripple="false"
           >
-            <!-- <v-list-item-icon>
-              <v-icon>{{ item.icon }}</v-icon>
-            </v-list-item-icon> -->
             <v-list-item-title
               >{{ item.icon }} {{ item.title }}</v-list-item-title
             >
