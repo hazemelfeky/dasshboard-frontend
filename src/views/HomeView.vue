@@ -1,5 +1,10 @@
 <script setup>
 import { useRouter } from "vue-router";
+import { useStore } from "@/store";
+import { storeToRefs } from "pinia";
+
+const store = useStore();
+const { loading } = storeToRefs(store);
 
 const router = useRouter();
 const drawer = ref(null);
@@ -74,7 +79,20 @@ const handleLogout = () => {
       </div>
     </div>
   </v-navigation-drawer>
-  <div class="padding--nav h-full" :class="{ 'pa-0': isMobile }">
+  <div v-if="loading">
+    <div class="loading">
+      <h3>loading</h3>
+    </div>
+  </div>
+  <div v-else class="padding--nav h-full" :class="{ 'pa-0': isMobile }">
     <router-view :isMobile="isMobile"> </router-view>
   </div>
 </template>
+<style lang="scss" scoped>
+.loading {
+  width: 100%;
+  height: 100%;
+  display: grid;
+  place-items: center;
+}
+</style>

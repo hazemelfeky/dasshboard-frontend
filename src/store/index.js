@@ -4,6 +4,7 @@ import { ref } from "vue";
 
 export const useStore = defineStore("terminal", () => {
   let id = 0;
+  const loading = ref(false);
   const tabs = ref([
     {
       id,
@@ -35,8 +36,9 @@ export const useStore = defineStore("terminal", () => {
   };
 
   const getDashboard = async () => {
-    console.log(addAuthToRequest("processes"));
+    loading.value = true;
     const data = await axios.get(addAuthToRequest("processes"));
+    loading.value = false;
     dashboardData.value = data.data;
     return data;
   };
@@ -91,10 +93,10 @@ export const useStore = defineStore("terminal", () => {
     );
     images.value = data.data;
     return data;
-    // console.log("pullImage");
   };
 
   return {
+    loading,
     host,
     username,
     password,
