@@ -30,7 +30,7 @@ const { dashboardData } = storeToRefs(store);
 const props = defineProps(["isMobile"]);
 
 onMounted(async () => {
-  if (!dashboardData.value) await getDashboard();
+  if (!dashboardData.value.length) await getDashboard();
 });
 const x = ref(5);
 </script>
