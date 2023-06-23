@@ -5,6 +5,7 @@ import { storeToRefs } from "pinia";
 const store = useStore();
 
 const dialog = ref(false);
+const loadingLogin = ref(false);
 const type = ref("success");
 
 const { host, username, password } = storeToRefs(store);
@@ -16,13 +17,19 @@ const handleSubmit = async () => {
   if (host.value == 1) {
     type.value = "success";
   } else {
-    const data = await getDashboard();
-    if (data.status == 200) {
-      type.value = "success";
-      saveAuthData();
-    } else {
+    loadingLogin.value = true;
+    try {
+      const data = await getDashboard();
+      if (data.status == 200) {
+        type.value = "success";
+        saveAuthData();
+      } else {
+        type.value = "error";
+      }
+    } catch (e) {
       type.value = "error";
     }
+    loadingLogin.value = false;
   }
   dialog.value = true;
 };
@@ -38,7 +45,7 @@ const handleSubmit = async () => {
         <customInput v-model="password" type="password" placeholder="password">
         </customInput>
       </div>
-      <button>login</button>
+      <v-btn @click="handleSubmit" :loading="loadingLogin">login</v-btn>
     </form>
 
     <alert-popup :type="type" v-model="dialog" />
