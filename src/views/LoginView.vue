@@ -40,10 +40,13 @@ const handleSubmit = async () => {
     <h1 class="logo"><img src="../assets/logo.png" alt="word logo" /></h1>
     <form class="login--form" @submit.prevent="handleSubmit">
       <div class="form--inputs">
-        <customInput v-model="host" placeholder="ip"> </customInput>
-        <customInput v-model="username" placeholder="username"> </customInput>
-        <customInput v-model="password" type="password" placeholder="password">
-        </customInput>
+        <customInput v-model="host" placeholder="ip" />
+        <customInput v-model="username" placeholder="username" />
+        <customInput
+          v-model="password"
+          type="password"
+          placeholder="password"
+        />
       </div>
       <v-btn @click="handleSubmit" :loading="loadingLogin">login</v-btn>
     </form>
