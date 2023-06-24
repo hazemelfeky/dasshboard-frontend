@@ -6,10 +6,10 @@
 </template>
 
 <script setup>
-import "../assets/xterm/dist/xterm.js";
-import "../assets/xterm/dist/addons/fit/fit.js";
 import io from "socket.io-client";
 import axios from "axios";
+// import "../assets/xterm/dist/xterm.js";
+// import "../assets/xterm/dist/addons/fit/fit.js";
 
 const props = defineProps({ tab: { type: Object } });
 
