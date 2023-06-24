@@ -5,7 +5,8 @@
   "scripts": {
     "dev": "vite dev",
     "serve": "vite serve",
-    "build": "vite build"
+    "build": "vite build",
+    "preview": "vite preview"
   },
   "dependencies": {
     "@mdi/js": "^7.1.96",
