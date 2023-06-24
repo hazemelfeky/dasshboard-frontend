@@ -21,7 +21,9 @@
     "vue": "^3.2.13",
     "vue-chartjs": "^5.2.0",
     "vue-router": "^4.0.3",
-    "vuetify": "3.1.5"
+    "vuetify": "3.1.5",
+    "xterm": "^5.2.1",
+    "xterm-addon-fit": "^0.7.0"
   },
   "devDependencies": {
     "sass": "^1.32.7",
