@@ -16,6 +16,7 @@ const saveAuthData = store.saveAuthData;
 const handleSubmit = async () => {
   if (host.value == 1) {
     type.value = "success";
+    saveAuthData();
   } else {
     loadingLogin.value = true;
     try {

@@ -37,9 +37,13 @@ export const useStore = defineStore("terminal", () => {
 
   const getDashboard = async () => {
     loading.value = true;
-    const data = await axios.get(addAuthToRequest("processes"));
+    try {
+      const data = await axios.get(addAuthToRequest("processes"));
+      dashboardData.value = data.data;
+    } catch (e) {
+      console.log("error catch");
+    }
     loading.value = false;
-    dashboardData.value = data.data;
     return data;
   };
 
